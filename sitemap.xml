@@ -20,4 +20,19 @@
          <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
+    <url>
+         <loc>https://kpn2021.github.io/springboot-handbook/third/iptool/</loc>
+         <lastmod>2022-01-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://kpn2021.github.io/springboot-handbook/third/jasypt/</loc>
+         <lastmod>2022-01-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://kpn2021.github.io/springboot-handbook/third/zktool/</loc>
+         <lastmod>2022-01-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
 </urlset>
