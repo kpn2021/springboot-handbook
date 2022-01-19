@@ -1,1 +1,16 @@
-site_name: Demo Project
+site_name: springboot-handbook
+site_description: springboot手册
+site_author: 'kpn2021'
+site_url: 'https://kpn2021.github.io/springboot-handbook/'
+copyright: Copyright © 2022 keeplearn
+repo_url: 'https://github.com/kpn2021/springboot-handbook'
+nav:
+- Home: index.md
+- Documents:
+  - Usage: usage.md
+  - Tutorial: tutorial.md
+- About: about.md
+
+theme:
+  name: material
+  language: 'zh'
