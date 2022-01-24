@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="springboot手册">
+        <meta name="description" content="SpringBoot手册">
       
       
         <meta name="author" content="kpn2021">
@@ -19,7 +19,7 @@
     
     
       
-        <title>ZooKeeper操作工具 - springboot-handbook</title>
+        <title>ZooKeeper操作工具 - SpringBoot-Handbook</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#curator" class="md-skip">
+        <a href="#zookeeper" class="md-skip">
           跳转至
         </a>
       
@@ -78,7 +78,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../.." title="springboot-handbook" class="md-header__button md-logo" aria-label="springboot-handbook" data-md-component="logo">
+    <a href="../.." title="SpringBoot-Handbook" class="md-header__button md-logo" aria-label="SpringBoot-Handbook" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -91,7 +91,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            springboot-handbook
+            SpringBoot-Handbook
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -176,13 +176,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="springboot-handbook" class="md-nav__button md-logo" aria-label="springboot-handbook" data-md-component="logo">
+    <a href="../.." title="SpringBoot-Handbook" class="md-nav__button md-logo" aria-label="SpringBoot-Handbook" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
-    springboot-handbook
+    SpringBoot-Handbook
   </label>
   
     <div class="md-nav__source">
@@ -374,6 +374,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#curator" class="md-nav__link">
+    Curator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pom" class="md-nav__link">
     POM配置
   </a>
@@ -388,8 +395,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#commandlinerunnerimoocnode" class="md-nav__link">
-    在CommandLineRunner中打印imooc这个Node下的所有结点
+  <a href="#zkclientspringboot" class="md-nav__link">
+    让ZkClient随着SpringBoot启动而启动的用法
   </a>
   
 </li>
@@ -465,6 +472,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#curator" class="md-nav__link">
+    Curator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pom" class="md-nav__link">
     POM配置
   </a>
@@ -479,8 +493,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#commandlinerunnerimoocnode" class="md-nav__link">
-    在CommandLineRunner中打印imooc这个Node下的所有结点
+  <a href="#zkclientspringboot" class="md-nav__link">
+    让ZkClient随着SpringBoot启动而启动的用法
   </a>
   
 </li>
@@ -502,8 +516,17 @@
 </a>
 
 
-<h1 id="curator">Curator</h1>
-<pre><code>Curator 是 Netflix 公司开源的一套 Zookeeper 客户端框架,Curator 提供了一套易用性和可读性更强的 Fluent 风格的客户端 API ，还提供了 Zookeeper 各种应用场景的抽象封装，比如：分布式锁服务、集群领导选举、共享计数器、缓存机制、分布式队列等
+<h1 id="zookeeper">zookeeper</h1>
+<pre><code>Zookeeper 是一个 C/S 架构的服务，也就是 Client — Server 的形式。
+在我们使用 Zookeeper 时，都是使用 Zookeeper 的客户端向服务端发送请求，然后由服务端做出响应返回到客户端。
+在这个过程中，Zookeeper 的客户端需要与 Zookeeper 服务端建立连接，
+建立一个连接就是新建一个会话，那么会话的状态也就是 Zookeeper 客户端与 Zookeeper 服务端的连接状态
+</code></pre>
+<h2 id="curator">Curator</h2>
+<pre><code>Curator 是 Netflix 公司开源的一套 Zookeeper 客户端框架,
+Curator 提供了一套易用性和可读性更强的 Fluent 风格的客户端 API ，
+还提供了 Zookeeper 各种应用场景的抽象封装，
+比如：分布式锁服务、集群领导选举、共享计数器、缓存机制、分布式队列等
 </code></pre>
 <h2 id="pom">POM配置</h2>
 <pre><code class="language-xml">        &lt;dependency&gt;
@@ -523,15 +546,24 @@
 curator.connectString=127.0.0.1:2181
 # 会话超时时间
 curator.sessionTimeoutMs=5000
-# 命名空间，当前客户端的父节点,若没有imooc这个Node，则本项目启动时会自动创建这个Node
+# 命名空间，当前客户端的父节点,若zkServer没有imooc这个Node，则本项目启动时会创建这个Node,这个Node就是namespace
 curator.namespace=imooc
+# Tips： 使用 curator 时，我们需要注意是否配置 namespace ，
+# 如果没有配置 namespace 的话，我们使用 curator 进行操作时，path 参数需要填写全路径。
+# 如果配置了 namespace ，我们使用 curator 时，Curator 会自动帮我们在 path 前加上 namespace
 </code></pre>
-<h2 id="commandlinerunnerimoocnode">在CommandLineRunner中打印imooc这个Node下的所有结点</h2>
+<h2 id="zkclientspringboot">让ZkClient随着SpringBoot启动而启动的用法</h2>
 <pre><code class="language-java">package com.example.test22;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.framework.imps.CuratorFrameworkState;
+import org.apache.curator.framework.recipes.cache.CuratorCache;
+import org.apache.curator.framework.recipes.cache.CuratorCacheListener;
+import org.apache.curator.retry.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -539,21 +571,141 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class TestRunner implements CommandLineRunner {
+public class MyCuratorUtil implements CommandLineRunner {
+    // Zookeeper 服务器地址
+    @Value(&quot;${curator.connectString}&quot;)
+    private String           connectString;
+    // session 会话超时时间
+    @Value(&quot;${curator.sessionTimeoutMs}&quot;)
+    private int              sessionTimeoutMs;
+    // 名称空间：在操作节点时，会以 namespace 为父节点
+    @Value(&quot;${curator.namespace}&quot;)
+    private String           namespace;
 
-    @Autowired
-    private CuratorService curatorService;
+    /**
+     * session 重连策略，使用其中一种即可
+     */
+    // RetryForever：间隔{参数1}毫秒后重连，永远重试
+    private RetryPolicy      retryForever      = new RetryForever(3000);
+
+    // RetryOneTime：{参数1}毫秒后重连，只重连一次
+    private RetryPolicy      retryOneTime      = new RetryOneTime(3000);
+
+    // RetryNTimes： {参数2}毫秒后重连，重连{参数1}次
+    private RetryPolicy      retryNTimes       = new RetryNTimes(3, 3000);
+
+    // RetryUntilElapsed：每{参数2}毫秒重连一次，总等待时间超过{参数1}毫秒后停止重连
+    private RetryPolicy      retryUntilElapsed = new RetryUntilElapsed(10000, 3000);
+
+    // ExponentialBackoffRetry：可重连{参数2}次，并增加每次重连之间的睡眠时间，增加公式如下：
+    // {参数1} * Math.max(1,random.nextInt(1 &lt;&lt; ({参数2：maxRetries} + 1)))
+    private RetryPolicy      exponential       = new ExponentialBackoffRetry(1000, 3);
+
+    private CuratorFramework client            = null;
+
+    private CuratorCache     cache3            = null;
+
+    private void initZk() {
+        // 使用 CuratorFrameworkFactory 来构建 CuratorFramework
+        client = CuratorFrameworkFactory.builder()
+            // Zookeeper 服务器地址字符串
+            .connectString(connectString)
+            // session 会话超时时间
+            .sessionTimeoutMs(sessionTimeoutMs)
+            // 使用哪种重连策略
+            .retryPolicy(retryOneTime)
+            // 配置父节点
+            .namespace(namespace).build();
+
+        // 开启会话
+        client.start();
+        log.warn(&quot;zk Client已启动!&quot;);
+        // 构建 CuratorCache 实例
+        cache3 = CuratorCache.build(client, &quot;/&quot;);
+        // 使用 Fluent 风格和 lambda 表达式来构建 CuratorCacheListener 的事件监听
+        CuratorCacheListener listener = CuratorCacheListener.builder()
+            // 开启对所有事件的监听
+            // type 事件类型：NODE_CREATED, NODE_CHANGED, NODE_DELETED;
+            // oldNode 原节点：ChildData 类，包括节点路径，节点状态 Stat，节点 data
+            // newNode 新节点：同上
+            .forAll((type, oldNode, newNode) -&gt; {
+                log.warn(&quot; 事件类型：{}&quot;, type);
+                log.warn(&quot; 原节点：{}&quot;, oldNode);
+                log.warn(&quot; 新节点：{}&quot;, newNode);
+            })
+            //            // 开启对节点创建事件的监听
+            //            .forCreates(childData -&gt; {
+            //
+            //                log.warn(&quot;创建了新节点：{}&quot;, childData);
+            //
+            //            })
+            //            //             开启对节点更新事件的监听
+            //            .forChanges((oldNode, newNode) -&gt; {
+            //                log.warn(&quot;forChanges 节点原始内容：{}&quot;, oldNode);
+            //                log.warn(&quot;forChanges 节点更新后：{}&quot;, newNode);
+            //            })
+            //            // 开启对节点删除事件的监听
+            //            .forDeletes(oldNode -&gt; {
+            //                log.warn(&quot;删除了结点:{}&quot;, oldNode);
+            //            })
+            // 初始化
+            .forInitialized(() -&gt; {
+                log.warn(&quot;CuratorCacheListener初始化完毕&quot;);
+            })
+            // 构建
+            .build();
+
+        // 注册 CuratorCacheListener 到 CuratorCache
+        cache3.listenable().addListener(listener);
+        // CuratorCache 开启缓存
+        cache3.start();
+        log.warn(&quot;zk CuratorCache已启动!&quot;);
+        log.warn(&quot;zk state:{}&quot;, client.getState());
+
+    }
 
     @Override
     public void run(String... args) throws Exception {
-        // 获取客户端
-        CuratorFramework curatorClient = curatorService.getCuratorClient();
-        // 开启会话
-        curatorClient.start();
-        // 查询命名空间下的子节点
-        List&lt;String&gt; strings = curatorClient.getChildren().forPath(&quot;/&quot;);
-        log.warn(String.valueOf(strings));
-        curatorClient.close();
+        initZk();
+    }
+
+    /**
+     * 父节点自动掉了，要在下次操作时恢复，即重新建立带zWatch 的 zkClient
+     */
+    private void refreshZkClient() {
+        if (client.getState() != CuratorFrameworkState.STOPPED) {
+            cache3.close();
+            log.warn(&quot;zk CuratorCache 已关闭!&quot;);
+            client.close();
+            log.warn(&quot;zk Client 已关闭!&quot;);
+        }
+        initZk();
+        log.warn(&quot;refreshZkClient---Completed&quot;);
+    }
+
+    public List&lt;String&gt; getAllNodeByPath(String path) throws Exception {
+        refreshZkClient();
+        return client.getChildren().forPath(path);
+    }
+
+    public void createNormalNode(String path) throws Exception {
+        refreshZkClient();
+        client.create().forPath(path);
+    }
+
+    public void createNodeAndData(String path, String dataStr) throws Exception {
+        refreshZkClient();
+        client.create().forPath(path, dataStr.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public void updateNodeData(String path, String dataStr) throws Exception {
+        refreshZkClient();
+        client.setData().forPath(path, dataStr.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public void deleteNode(String path) throws Exception {
+        refreshZkClient();
+        client.delete().forPath(path);
     }
 }
 
