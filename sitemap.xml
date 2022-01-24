@@ -11,6 +11,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://kpn2021.github.io/springboot-handbook/logback/</loc>
+         <lastmod>2022-01-24</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://kpn2021.github.io/springboot-handbook/tutorial/</loc>
          <lastmod>2022-01-24</lastmod>
          <changefreq>daily</changefreq>
