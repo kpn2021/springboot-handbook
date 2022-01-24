@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#zktool" class="md-skip">
+        <a href="#curator" class="md-skip">
           跳转至
         </a>
       
@@ -263,7 +263,7 @@
   
     <li class="md-nav__item">
       <a href="../../tutorial/" class="md-nav__link">
-        Tutorial
+        IDE环境
       </a>
     </li>
   
@@ -335,9 +335,54 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          ZooKeeper操作工具
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         ZooKeeper操作工具
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pom" class="md-nav__link">
+    POM配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    properties配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commandlinerunnerimoocnode" class="md-nav__link">
+    在CommandLineRunner中打印imooc这个Node下的所有结点
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -399,6 +444,35 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pom" class="md-nav__link">
+    POM配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    properties配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commandlinerunnerimoocnode" class="md-nav__link">
+    在CommandLineRunner中打印imooc这个Node下的所有结点
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -414,7 +488,62 @@
 </a>
 
 
-<h1 id="zktool">zktool</h1>
+<h1 id="curator">Curator</h1>
+<pre><code>Curator 是 Netflix 公司开源的一套 Zookeeper 客户端框架,Curator 提供了一套易用性和可读性更强的 Fluent 风格的客户端 API ，还提供了 Zookeeper 各种应用场景的抽象封装，比如：分布式锁服务、集群领导选举、共享计数器、缓存机制、分布式队列等
+</code></pre>
+<h2 id="pom">POM配置</h2>
+<pre><code class="language-xml">        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.curator&lt;/groupId&gt;
+            &lt;artifactId&gt;curator-framework&lt;/artifactId&gt;
+            &lt;version&gt;5.1.0&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.curator&lt;/groupId&gt;
+            &lt;artifactId&gt;curator-recipes&lt;/artifactId&gt;
+            &lt;version&gt;5.1.0&lt;/version&gt;
+        &lt;/dependency&gt;   
+</code></pre>
+<h2 id="properties">properties配置</h2>
+<pre><code class="language-properties"># Zookeeper 地址
+#curator.connectString=192.168.0.77:2181,192.168.0.88:2181,192.168.0.88:2181
+curator.connectString=127.0.0.1:2181
+# 会话超时时间
+curator.sessionTimeoutMs=5000
+# 命名空间，当前客户端的父节点,若没有imooc这个Node，则本项目启动时会自动创建这个Node
+curator.namespace=imooc
+</code></pre>
+<h2 id="commandlinerunnerimoocnode">在CommandLineRunner中打印imooc这个Node下的所有结点</h2>
+<pre><code class="language-java">package com.example.test22;
+
+import java.util.List;
+import org.apache.curator.framework.CuratorFramework;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Component
+public class TestRunner implements CommandLineRunner {
+
+    @Autowired
+    private CuratorService curatorService;
+
+    @Override
+    public void run(String... args) throws Exception {
+        // 获取客户端
+        CuratorFramework curatorClient = curatorService.getCuratorClient();
+        // 开启会话
+        curatorClient.start();
+        // 查询命名空间下的子节点
+        List&lt;String&gt; strings = curatorClient.getChildren().forPath(&quot;/&quot;);
+        log.warn(String.valueOf(strings));
+        curatorClient.close();
+    }
+}
+
+</code></pre>
 
               
             </article>
