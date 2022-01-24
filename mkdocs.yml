@@ -10,8 +10,9 @@ nav:
 - Home: index.md
 - GettingStarted:
   - 构建SpringBoot: usage.md
-  - Tutorial: tutorial.md
+  - IDE环境: tutorial.md
 - 常用技巧:
+  - logback日志打印配置: logback.md
   - IP定位地理位置: third/iptool.md  
   - ZooKeeper操作工具: third/zktool.md
   - SpringBoot配置文件加密工具: third/jasypt.md
