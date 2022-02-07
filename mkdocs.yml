@@ -11,11 +11,72 @@ nav:
 - GettingStarted:
   - 构建SpringBoot: usage.md
   - IDE环境: tutorial.md
-- 常用技巧:
+- 编程常用技能点:
   - logback日志打印配置: logback.md
-  - IP定位地理位置: third/iptool.md  
-  - ZooKeeper操作工具: third/zktool.md
-  - SpringBoot配置文件加密工具: third/jasypt.md
+  - springBoot项目配置文件处理器: config-processor.md
+  - restful现代web开发常用配置: restful.md
+  - jsr303校验开发工具: validation.md
+  - inteceptor拦截器开发: inteceptor.md
+  - aop切面编程: aop.md
+  - webFilter过滤器开发: filter.md
+  - webListener监听器开发: listener.md
+  - thymeleaf传统web开发工具: thymeleaf.md
+  - springTask自带的任务调度工具: task.md
+  - event自带的观察者模式开发工具: event.md
+  - springAsync异步开发工具: async.md
+  - webflux响应式API开发工具: webflux.md
+  - runnner启动时附加的运行工具: runner.md
+  - lifecycle生命周期自定义处理工具: lifecycle.md
+  - initializingBean预加载工具: init.md
+  - gzip-api数据压缩配置: gzip.md
+  - caffeine内存缓存工具: caffeine.md
+  - redis外部缓存工具: redis.md
+  - mongodb文档数据库工具: mongo.md 
+  - springSecurity-web安全工具: security.md
+  - 涉及第三方框架类:
+    - swagger接口文档工具: third/swager.md
+    - shiro-web安全工具: third/shiro.md
+    - saToken国产web安全工具: third/satoken.md
+    - jwt-SPA开发必备签名工具: third/jwt.md
+    - lombok插件妙用: third/lombok.md
+    - druid可视化数据库连接池: third/druid.md
+    - springDataJpa编程: third/jpa.md
+    - 原生mybatis-ORM工具: third/mybatis.md
+    - mybatis-plus国产ORM工具: third/mplus.md
+    - webService编程: third/cxf.md
+    - webSocket编程: third/websocket.md
+    - mqtt编程: third/mqtt.md
+    - tcp-or-udp编程: third/netty.md
+    - IP定位地理位置: third/iptool.md  
+    - 构建docker-springboot项目镜像: third/docker.md
+    - ZooKeeper操作工具: third/zktool.md
+    - Jasypt配置文件加密工具: third/jasypt.md
+    - actuator及SBA项目监控工具: third/sba.md
+    - Apollo携程服务配置中心: third/apollo.md
+    - xxl-job美团任务调度中心: third/xxl-job.md
+    - nacos阿里服务注册中心: third/nacos.md
+    - gateway开源api网关: third/gateway.md
+    - influxDB时序数据库: third/influxdb.md
+    - neo4j图形数据库: third/neo4j.md
+    - quartz持久化任务调度工具: third/quartz.md
+    - elasticSearch日志搜索开发: third/es.md
+    - rabbitmq消息队列: third/rabbit.md
+  - 便捷工具类:
+    - spring自带的一些工具类: spring-inner-util.md
+    - hutool工具类: hutool-util.md
+    - guava工具类: guava-util.md
+    - apache工具类: common-util.md
+  - 设计模式类:
+    - 观察者模式: event.md
+    - 策略模式:  strategy.md
+    - 建造者模式: builder.md
+  - 理论概念类:
+    - SPI机制: note/spi.md
+    - springboot启动流程: note/sb-init.md
+    - 循环依赖问题: note/cycle-dep.md
+    - springMVC执行流程: note/mvc.md
+    - 多线程与线程池问题: note/thread.md
+        
 - About: about.md
 
 # 使用主题要安装依赖 pip install mkdocs-material

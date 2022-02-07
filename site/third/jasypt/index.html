@@ -508,11 +508,47 @@ jasypt.encryptor.password=atpingan
 jasypt.encryptor.algorithm=PBEWithMD5AndDES
 #加密器配置
 jasypt.encryptor.iv-generator-classname=org.jasypt.iv.NoIvGenerator
+
+</code></pre>
+<p>二、在启动类上添加@EnableEncryptableProperties注解</p>
+<p>三、在测试类里把明文加密为密文</p>
+<pre><code class="language-java">@Test
+    void contextLoads() {
+
+        BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+        textEncryptor.setPassword(&quot;atpingan&quot;);
+
+        String userNameS = textEncryptor.encrypt(&quot;root&quot;);
+        String passWordS = textEncryptor.encrypt(&quot;123456&quot;);
+
+        System.out.println(&quot;userName--&gt;  &quot; + userNameS);
+        System.out.println(&quot;passWord--&gt;  &quot; + passWordS);
+        //————————————————
+        //        版权声明：本文为CSDN博主「神雕大侠mu」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+        //        原文链接：https://blog.csdn.net/m0_37635053/article/details/118256179
+        System.err.println(textEncryptor.decrypt(userNameS));
+        System.err.println(textEncryptor.decrypt(passWordS));
+    }
+</code></pre>
+<p>四、在properties里配置自定义的加密配置项</p>
+<pre><code>
 # 其中ENC()是默认加密法的固定配置,ENC()内部的字符串为加密后的密文
 test.app.param=ENC(8wGAMAxhagkUtGmTbfqq/A==)
 
 </code></pre>
-<p>二、在启动类上添加@EnableEncryptableProperties注解</p>
+<p>五、测试读取自定义的加密配置项</p>
+<pre><code class="language-java">@RestController
+public class TestController {
+
+    @Value(&quot;${test.app.param:hello}&quot;)
+    private String testAppParam;
+
+    @GetMapping(&quot;/testJasypt&quot;)
+    public String testJasypt() {
+        return testAppParam + &quot;!!!&quot;;
+    }
+}
+</code></pre>
 
               
             </article>
