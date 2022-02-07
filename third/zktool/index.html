@@ -401,6 +401,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#zk" class="md-nav__link">
+    测试zk的使用
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -499,6 +506,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#zk" class="md-nav__link">
+    测试zk的使用
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -517,11 +531,31 @@
 
 
 <h1 id="zookeeper">zookeeper</h1>
+<blockquote>
+<p>介绍</p>
+</blockquote>
 <pre><code>Zookeeper 是一个 C/S 架构的服务，也就是 Client — Server 的形式。
 在我们使用 Zookeeper 时，都是使用 Zookeeper 的客户端向服务端发送请求，然后由服务端做出响应返回到客户端。
 在这个过程中，Zookeeper 的客户端需要与 Zookeeper 服务端建立连接，
 建立一个连接就是新建一个会话，那么会话的状态也就是 Zookeeper 客户端与 Zookeeper 服务端的连接状态
 </code></pre>
+<blockquote>
+<p>搭建zookeeper服务器</p>
+</blockquote>
+<p>建议使用Docker安装</p>
+<pre><code># 拉取 zookeeper 镜像
+docker pull zookeeper
+
+# run 启动，-d 后台运行，--name 别名，-p 端口映射（可以写多个）， 容器名称:版本（不写默认latest）
+docker run -d --name=zookeeper -p 2181:2181 zookeeper
+
+
+</code></pre>
+<blockquote>
+<p>zk可视化管理工具</p>
+</blockquote>
+<p>建议使用PrettyZoo，<a href="https://www.oschina.net/p/prettyzoo">下载地址</a></p>
+<p><img alt="prettyZoo" src="https://s4.ax1x.com/2022/02/07/HMnopn.png" /></p>
 <h2 id="curator">Curator</h2>
 <pre><code>Curator 是 Netflix 公司开源的一套 Zookeeper 客户端框架,
 Curator 提供了一套易用性和可读性更强的 Fluent 风格的客户端 API ，
@@ -709,6 +743,44 @@ public class MyCuratorUtil implements CommandLineRunner {
     }
 }
 
+</code></pre>
+<h2 id="zk">测试zk的使用</h2>
+<pre><code class="language-java">    @Autowired
+    private MyCuratorUtil myCuratorUtil;
+
+    @GetMapping(&quot;/testCreate&quot;)
+    public String testApi() throws Exception {
+        myCuratorUtil.createNormalNode(&quot;/mooc&quot;);
+        return testcfg;
+    }
+
+    @GetMapping(&quot;/findNodeList&quot;)
+    public String findNodeList() throws Exception {
+        // 查询命名空间下的子节点
+        List&lt;String&gt; strings = myCuratorUtil.getAllNodeByPath(&quot;/t1&quot;);
+        return String.valueOf(strings);
+    }
+
+    @PostMapping(&quot;/testCreate2&quot;)
+    public String testCreate2() throws Exception {
+        myCuratorUtil.createNodeAndData(&quot;/mc3&quot;, &quot;hello123&quot;);
+
+        return testcfg;
+    }
+
+    @PutMapping(&quot;/testUpdate&quot;)
+    public String testUpdate() throws Exception {
+        myCuratorUtil.updateNodeData(&quot;/mooc&quot;, &quot;Wiki&quot;);
+        return testcfg;
+    }
+
+    @DeleteMapping(&quot;/testDel&quot;)
+    public String testDel() throws Exception {
+
+        //父节点的最后一个子节点-delete后，zk会自动把父节点也删掉
+        myCuratorUtil.deleteNode(&quot;/mooc&quot;);
+        return testcfg;
+    }
 </code></pre>
 
               

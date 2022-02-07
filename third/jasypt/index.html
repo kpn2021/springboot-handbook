@@ -363,9 +363,47 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          SpringBoot配置文件加密工具
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         SpringBoot配置文件加密工具
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pom" class="md-nav__link">
+    需要的POM依赖
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jasypt_1" class="md-nav__link">
+    配置jasypt
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -413,6 +451,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pom" class="md-nav__link">
+    需要的POM依赖
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jasypt_1" class="md-nav__link">
+    配置jasypt
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -429,6 +489,30 @@
 
 
 <h1 id="jasypt">jasypt</h1>
+<h2 id="pom">需要的POM依赖</h2>
+<pre><code class="language-xml">&lt;dependency&gt;
+            &lt;groupId&gt;com.github.ulisesbocchio&lt;/groupId&gt;
+            &lt;artifactId&gt;jasypt-spring-boot-starter&lt;/artifactId&gt;
+            &lt;version&gt;2.0.0&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<h2 id="jasypt_1">配置jasypt</h2>
+<p>一、在application.properties里配置jasypt</p>
+<pre><code class="language-properties">
+#jasypt的加密配置
+#密钥,
+# 不建议将jasypt.encryptor.password直接配置在属性文件中，
+# 可以通过java -jar -Djasypt.encryptor.password=atpingan  启动程序，作为系统属性、命令行参数或环境变量传递
+jasypt.encryptor.password=atpingan
+#算法
+jasypt.encryptor.algorithm=PBEWithMD5AndDES
+#加密器配置
+jasypt.encryptor.iv-generator-classname=org.jasypt.iv.NoIvGenerator
+# 其中ENC()是默认加密法的固定配置,ENC()内部的字符串为加密后的密文
+test.app.param=ENC(8wGAMAxhagkUtGmTbfqq/A==)
+
+</code></pre>
+<p>二、在启动类上添加@EnableEncryptableProperties注解</p>
 
               
             </article>
