@@ -374,6 +374,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    介绍
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zookeeper_1" class="md-nav__link">
+    搭建zookeeper服务器
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zk" class="md-nav__link">
+    zk可视化管理工具
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#curator" class="md-nav__link">
     Curator
   </a>
@@ -402,9 +423,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#zk" class="md-nav__link">
+  <a href="#zk_1" class="md-nav__link">
     测试zk的使用
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zk_2" class="md-nav__link">
+    zk在第三方框架中的应用
+  </a>
+  
+    <nav class="md-nav" aria-label="zk在第三方框架中的应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zkkafka" class="md-nav__link">
+    zk在kafka中的应用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zkdubbo" class="md-nav__link">
+    zk在Dubbo中的应用
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -479,6 +527,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    介绍
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zookeeper_1" class="md-nav__link">
+    搭建zookeeper服务器
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zk" class="md-nav__link">
+    zk可视化管理工具
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#curator" class="md-nav__link">
     Curator
   </a>
@@ -507,9 +576,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#zk" class="md-nav__link">
+  <a href="#zk_1" class="md-nav__link">
     测试zk的使用
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zk_2" class="md-nav__link">
+    zk在第三方框架中的应用
+  </a>
+  
+    <nav class="md-nav" aria-label="zk在第三方框架中的应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zkkafka" class="md-nav__link">
+    zk在kafka中的应用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zkdubbo" class="md-nav__link">
+    zk在Dubbo中的应用
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -531,17 +627,45 @@
 
 
 <h1 id="zookeeper">zookeeper</h1>
-<blockquote>
-<p>介绍</p>
-</blockquote>
-<pre><code>Zookeeper 是一个 C/S 架构的服务，也就是 Client — Server 的形式。
+<h2 id="_1">介绍</h2>
+<p><img alt="zNode" src="https://s4.ax1x.com/2022/02/07/HMty1U.png" /></p>
+<pre><code>  Zookeeper 叫做分布式协调服务
+Zookeeper 是一个 C/S 架构的服务，也就是 Client — Server 的形式。
 在我们使用 Zookeeper 时，都是使用 Zookeeper 的客户端向服务端发送请求，然后由服务端做出响应返回到客户端。
-在这个过程中，Zookeeper 的客户端需要与 Zookeeper 服务端建立连接，
-建立一个连接就是新建一个会话，那么会话的状态也就是 Zookeeper 客户端与 Zookeeper 服务端的连接状态
+
+Zookeeper 数据模型的结构为树形节点。Znode 的元素组成有 4 种：data（用户数据）、ACL（权限信息）、child（子节点引用）、stat（元数据）。Znode 的类型有 4 种：持久节点、持久顺序节点、临时节点、临时顺序节点。我们可以根据 Znode 的特点来实现各种功能，比如服务注册与发现、配置中心、分布式锁等.
+Zookeeper 是 CP 系统，在保证数据一致性的同时，不能保证服务注册的高可用。
 </code></pre>
 <blockquote>
-<p>搭建zookeeper服务器</p>
+<p>zookeeper特点</p>
 </blockquote>
+<pre><code>在分布式环境下，Zookeeper 的部署方式为一主（ Leader ）多从（ Follower ）的集群方式，只要半数以上的节点（包括 Leader 节点）存活，Zookeeper 集群就能正常服务。就算是 Leader 节点挂掉了，Zookeeper 也会进行崩溃恢复，所说 Zookeeper 集群本身是高可用的；
+
+Zookeeper 集群的数据具有全局一致性。也就是说，无论客户端连接到 Zookeeper 集群的哪一个从节点，获取的数据都是一致的；
+
+在 Zookeeper 集群节点进行数据同步更新时，要么全部成功，要么全部失败。所以 Zookeeper 的数据更新具有原子性；
+
+在同一个客户端对 Zookeeper 节点进行更新请求操作时，会根据发送的顺序依次去执行；
+
+由于 Zookeeper 能存储的数据量非常小，所以数据的同步更新也会非常快。也就可以说在一定时间段内，客户端获取的数据是实时的
+</code></pre>
+<blockquote>
+<p>zookeeper使用场景</p>
+</blockquote>
+<pre><code>服务注册与发现
+
+当我们的分布式系统增加了一个服务，我们只需要利用 Znode 和 Watcher，让它注册到 Zookeeper 中，我们就可以很方便的对这个服务进行管理；
+
+分布式锁
+
+为了防止在分布式环境下，服务中多个进程之间互相干扰，我们可以用 Zookeeper 的临时顺序节点实现分布式锁，对这些进程进行调度，让它们顺序执行；
+
+配置管理
+
+我们可以把核心的配置文件交给 Zookeeper 管理。当我们修改配置文件时，Zookeeper 就会把配置文件的信息同步到集群中的所有节点中去
+
+</code></pre>
+<h2 id="zookeeper_1">搭建zookeeper服务器</h2>
 <p>建议使用Docker安装</p>
 <pre><code># 拉取 zookeeper 镜像
 docker pull zookeeper
@@ -551,9 +675,7 @@ docker run -d --name=zookeeper -p 2181:2181 zookeeper
 
 
 </code></pre>
-<blockquote>
-<p>zk可视化管理工具</p>
-</blockquote>
+<h2 id="zk">zk可视化管理工具</h2>
 <p>建议使用PrettyZoo，<a href="https://www.oschina.net/p/prettyzoo">下载地址</a></p>
 <p><img alt="prettyZoo" src="https://s4.ax1x.com/2022/02/07/HMnopn.png" /></p>
 <h2 id="curator">Curator</h2>
@@ -744,7 +866,7 @@ public class MyCuratorUtil implements CommandLineRunner {
 }
 
 </code></pre>
-<h2 id="zk">测试zk的使用</h2>
+<h2 id="zk_1">测试zk的使用</h2>
 <pre><code class="language-java">    @Autowired
     private MyCuratorUtil myCuratorUtil;
 
@@ -781,6 +903,42 @@ public class MyCuratorUtil implements CommandLineRunner {
         myCuratorUtil.deleteNode(&quot;/mooc&quot;);
         return testcfg;
     }
+</code></pre>
+<h2 id="zk_2">zk在第三方框架中的应用</h2>
+<p>除了单独使用 Zookeeper 来实现分布式锁、配置中心等功能外，
+在我们使用一些优秀的框架时，比如高性能的分布式流处理平台 Apache Kafka，高性能的 Java RPC 框架 Apache Dubbo，它们也不同程度的依赖了 Zookeeper 服务。</p>
+<h3 id="zkkafka">zk在kafka中的应用</h3>
+<pre><code>Topic 配置管理： Topic 的配置会注册到 Zookeeper 中 的 config 节点下，根据 config 节点来动态更新配置；
+
+Broker 管理： 在每个 Broker 启动时，都会注册到 Zookeeper 的 brokers 节点下；
+
+Topic 及 Partition 管理： Topic 会注册到 brokers 节点下的 topics 节点下，Partition 会注册到 Topic 的节点下；
+
+Producer 负载均衡： Producer 将消息发布到 Topic 时，会根据 Zookeeper 的 brokers 节点下的 Broker 来进行动态的负载均衡；
+
+Consumer 负载均衡： Consumer 从 Topic 拉取消息时，同样也需要根据 Zookeeper 的 brokers 节点下的 Broker 来进行动态的负载均衡；
+
+消费管理： 每个 Partition 只能被 Consumer Group 中的一个 Consumer 进行消费，因此需要关联 Partition 与 Consumer 之间的关系，将 Consumer 的 Consumer ID 注册到相关联的 Partition 节点的临时节点上；
+
+Offset 记录： 在 Consumer 对指定 Partition 进行消息消费的过程中，需要将 Partition 的消费数量记录到 Zookeeper 中。
+</code></pre>
+<h3 id="zkdubbo">zk在Dubbo中的应用</h3>
+<pre><code>根据 Zookeeper 的树状结构，Dubbo 把节点分为 4 层
+
+第一层为 Root 节点，固定为 dubbo；
+
+第二层为服务节点，我们可以根据不同的服务来注册不同的服务节点，同时 Monitor 会监听服务节点；
+
+第三层为服务的类型，分别为服务提供者和服务消费者，固定为 providers 和 consumers ；
+
+第四层为服务提供者和服务消费者的 URL，如果是 Provider 就会注册到 providers 节点下的临时节点。如果是 Consumer 就注册到 consumers 节点下的临时节点，并且对同一服务下的 providers 开启监听
+</code></pre>
+<blockquote>
+<p>Zookeeper 作为注册中心的原理</p>
+</blockquote>
+<pre><code>服务提供者把 URL 注册到 providers 下的临时节点，
+服务消费者从 providers 获取 URL 列表，并对 providers 开启子节点事件的监听。
+根据 Zookeeper 临时节点的特性，服务提供者只要与 Zookeeper 断开连接，Zookeeper 服务就会把该临时节点移除，此时服务消费者就会收到 providers 的子节点移除事件，然后更新自己的服务提供者的 URL 列表
 </code></pre>
 
               
