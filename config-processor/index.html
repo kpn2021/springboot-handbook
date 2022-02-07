@@ -63,6 +63,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#springboot" class="md-skip">
+          跳转至
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -327,10 +332,77 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          springBoot项目配置文件处理器
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         springBoot项目配置文件处理器
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pom" class="md-nav__link">
+    添加POM依赖
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#value" class="md-nav__link">
+    使用@Value读取
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    使用自定义配置类读取
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ymlproperties" class="md-nav__link">
+    yml与properties配置文件互转
+  </a>
+  
+    <nav class="md-nav" aria-label="yml与properties配置文件互转">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ymlproperties_1" class="md-nav__link">
+    在线互转yml与properties配置
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1309,6 +1381,73 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pom" class="md-nav__link">
+    添加POM依赖
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#value" class="md-nav__link">
+    使用@Value读取
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    使用自定义配置类读取
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ymlproperties" class="md-nav__link">
+    yml与properties配置文件互转
+  </a>
+  
+    <nav class="md-nav" aria-label="yml与properties配置文件互转">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ymlproperties_1" class="md-nav__link">
+    在线互转yml与properties配置
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -1319,9 +1458,79 @@
 </a>
 
 
-  <h1>springBoot项目配置文件处理器</h1>
+<h1 id="springboot">springboot读取配置项</h1>
+<h2 id="pom">添加POM依赖</h2>
+<pre><code class="language-xml">&lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<h2 id="value">使用@Value读取</h2>
+<p>1.在application.properties中配置</p>
+<pre><code>testcfg.param=123456
 
+</code></pre>
+<p>2.在某service类中读取</p>
+<pre><code>    @Value(&quot;${testcfg.param:123}&quot;)
+    private String testcfg;
+</code></pre>
+<blockquote>
+<p>语法1: ${配置项:配置项的默认值}</p>
+</blockquote>
+<p>说明:当application.properties中找不到这个配置时，取这里的默认值</p>
+<h2 id="_1">使用自定义配置类读取</h2>
+<p>1.在application.properties中配置</p>
+<pre><code>my.name=wefwf
+my.age=27
+</code></pre>
+<p>2.编写对应的配置类</p>
+<pre><code class="language-java">@Data
+@Component
+@ConfigurationProperties(prefix = &quot;my&quot;)
+public class TestBean {
+    private String name;
+    private int    age;
+}
+</code></pre>
+<p>3.在某类中读取这些配置</p>
+<pre><code class="language-java">    @Autowired
+    private TestBean testBean;
 
+    @GetMapping(&quot;/testBean&quot;)
+    public String testBean() {
+        return testBean.toString() + &quot;!!!&quot;;
+    }
+</code></pre>
+<h2 id="ymlproperties">yml与properties配置文件互转</h2>
+<pre><code> SpringBoot的配置文件都放在src/main/resources目录。
+ 有两种格式：一种是properties结尾的，一种是yaml或者yml文件结尾的，例application.properties，application.yml
+</code></pre>
+<blockquote>
+<p>properties文件的编写格式</p>
+</blockquote>
+<pre><code># 注释写法
+key=val
+key.a=213  # 读出来的是字符串
+key.b='qwer'
+# 数组写法 ，key.c读出来是一个字符串数组
+key.c[0]=werq
+key.c[1]=dfefg
+</code></pre>
+<blockquote>
+<p>yml文件编写格式</p>
+</blockquote>
+<pre><code class="language-yml"># 以空格的缩进程度来控制层级关系，空格个数不重要
+
+server:
+  port: 8080
+spring:
+  application:
+    name: 'helloworld'  
+
+</code></pre>
+<h3 id="ymlproperties_1">在线互转yml与properties配置</h3>
+<p>https://www.toyaml.com/index.html</p>
 
               
             </article>
