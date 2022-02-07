@@ -1,10 +1,33 @@
 # zookeeper
+
+> 介绍
+
 ```
 Zookeeper 是一个 C/S 架构的服务，也就是 Client — Server 的形式。
 在我们使用 Zookeeper 时，都是使用 Zookeeper 的客户端向服务端发送请求，然后由服务端做出响应返回到客户端。
 在这个过程中，Zookeeper 的客户端需要与 Zookeeper 服务端建立连接，
 建立一个连接就是新建一个会话，那么会话的状态也就是 Zookeeper 客户端与 Zookeeper 服务端的连接状态
 ```
+
+> 搭建zookeeper服务器
+
+建议使用Docker安装
+```
+# 拉取 zookeeper 镜像
+docker pull zookeeper
+
+# run 启动，-d 后台运行，--name 别名，-p 端口映射（可以写多个）， 容器名称:版本（不写默认latest）
+docker run -d --name=zookeeper -p 2181:2181 zookeeper
+
+
+```
+
+> zk可视化管理工具
+
+建议使用PrettyZoo，[下载地址](https://www.oschina.net/p/prettyzoo)
+
+![prettyZoo](https://s4.ax1x.com/2022/02/07/HMnopn.png)
+
 ## Curator
 ```
 Curator 是 Netflix 公司开源的一套 Zookeeper 客户端框架,
@@ -201,4 +224,45 @@ public class MyCuratorUtil implements CommandLineRunner {
     }
 }
 
+```
+
+## 测试zk的使用
+
+```java
+    @Autowired
+    private MyCuratorUtil myCuratorUtil;
+
+    @GetMapping("/testCreate")
+    public String testApi() throws Exception {
+        myCuratorUtil.createNormalNode("/mooc");
+        return testcfg;
+    }
+
+    @GetMapping("/findNodeList")
+    public String findNodeList() throws Exception {
+        // 查询命名空间下的子节点
+        List<String> strings = myCuratorUtil.getAllNodeByPath("/t1");
+        return String.valueOf(strings);
+    }
+
+    @PostMapping("/testCreate2")
+    public String testCreate2() throws Exception {
+        myCuratorUtil.createNodeAndData("/mc3", "hello123");
+
+        return testcfg;
+    }
+
+    @PutMapping("/testUpdate")
+    public String testUpdate() throws Exception {
+        myCuratorUtil.updateNodeData("/mooc", "Wiki");
+        return testcfg;
+    }
+
+    @DeleteMapping("/testDel")
+    public String testDel() throws Exception {
+
+        //父节点的最后一个子节点-delete后，zk会自动把父节点也删掉
+        myCuratorUtil.deleteNode("/mooc");
+        return testcfg;
+    }
 ```
